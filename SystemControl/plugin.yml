@@ -1,0 +1,5 @@
+name: SystemControl
+main: system\main
+version: 1.0
+api: [3.0.0-ALPHA10, 3.0.0-ALPHA11, 3.0.0-ALPHA12]
+author: 1.0
