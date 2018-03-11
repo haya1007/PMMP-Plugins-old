@@ -1,0 +1,5 @@
+name: JoinMessage
+main: join\main
+api: 3.0.0-ALPHA11
+version: 1.0
+author: hayao
