@@ -1,0 +1,23 @@
+name: LevelMoneySystem
+main: hayao\main
+api: [3.0.0-ALPHA10, 3.0.0-ALPHA11, 3.0.0-ALPHA12, 3.0.0-ALPHA13, 3.0.0-ALPHA14, 3.0.0-ALPHA15]
+version: 1.0
+author: hayao
+commands:
+  money:
+    description: "所持金確認"
+
+  addmoney:
+    description: "お金を増やす"
+    permission: op
+
+  removemoney:
+    description: "お金を減らす"
+    permission: op
+
+  seemoney:
+    description: "プレイヤーのお金を見る"
+    permission: op
+
+  pay:
+    description: "お金交換"
