@@ -1,0 +1,12 @@
+name: SapwnMob
+main: SpawnMob\main
+version: 1.0
+author: hayao
+api: 2.0.0
+commands:
+  xyz:
+    description: 座標表示
+    permission: op
+  zombie:
+    description: zombie
+    permission: op
