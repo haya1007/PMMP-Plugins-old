@@ -1,0 +1,6 @@
+name: TimeKill
+main: TimeKill\main
+version: 1.0
+api: [2.0.0]
+load: POSTWORLD
+author: hayao
