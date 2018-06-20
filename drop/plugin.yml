@@ -1,0 +1,5 @@
+name: drop
+api: 1.10.0
+version: 1.0
+author: hayao
+main: drop\drop
