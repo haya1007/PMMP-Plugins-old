@@ -1,0 +1,10 @@
+name: KillWarn
+main: kill_warn\main
+api: 4.0.0
+version: 1.0
+author: hayao
+commands:
+  warn:
+    description: "Warnの総合コマンド"
+    permission: op
+    usage: /warn help
