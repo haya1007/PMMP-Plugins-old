@@ -324,7 +324,7 @@ class main extends PluginBase implements Listener{
 		$this->config['land'] = new Config($this->getDataFolder().'money/land.json', Config::JSON);
 
 		if($this->server->get("防具の耐久値が無限") === "true"){
-			$this->getServer()->getScheduler()->scheduleRepeatingTask(new ArmorUnbreaking($this), 10);
+			$this->getScheduler()->scheduleRepeatingTask(new ArmorUnbreaking($this), 10);
 		}
 	}
 
@@ -601,7 +601,7 @@ class main extends PluginBase implements Listener{
 		}
 
 		if($this->server->get("ステータスバーを表示") === "true"){
-			$this->status[$name] = $this->getServer()->getScheduler()->scheduleRepeatingTask(new StatusBar($this, $player), 10);
+			$this->status[$name] = $this->getScheduler()->scheduleRepeatingTask(new StatusBar($this, $player), 10);
 		}
 	}
 
@@ -663,7 +663,7 @@ class main extends PluginBase implements Listener{
 				if(!isset($this->shop[$name])){
 					$player->sendMessage("§a購入する場合は、再度タップしてください");
 					$this->shop[$name] = "true";
-					$this->getServer()->getScheduler()->scheduleDelayedTask(new AgainTap($this, $name), 2 * 20);
+					$this->getScheduler()->scheduleDelayedTask(new AgainTap($this, $name), 2 * 20);
 				}else{
 					$player_money = $this->getMoney($name);
 					$item = Item::fromString($id);
@@ -675,7 +675,7 @@ class main extends PluginBase implements Listener{
 								$this->removeMoney($name, $money);
 								$inv->addItem($add_item);
 								$player->sendMessage("§a購入しました");
-								$this->getServer()->getScheduler()->scheduleDelayedTask(new buy($this, $name), 2 * 20);
+								$this->getScheduler()->scheduleDelayedTask(new buy($this, $name), 2 * 20);
 							}
 						}else{
 							$player->sendMessage("§cインベントリに空きがありません");
@@ -944,14 +944,13 @@ class main extends PluginBase implements Listener{
 
 class AgainTap extends Task{//ショップ
 
-	function __construct(PluginBase $owner, $name){
-		parent::__construct($owner);
+	function __construct(PluginBase $owner, $nam$this->owner = $owner;
 		$this->name = $name;
 	}
 
 	function onRun(int $currentTick){
-		if(isset($this->getOwner()->shop[$this->name])){
-			unset($this->getOwner()->shop[$this->name]);
+		if(isset($this->owner->shop[$this->name])){
+			unset($this->owner->shop[$this->name]);
 		}
 	}
 }
@@ -959,13 +958,13 @@ class AgainTap extends Task{//ショップ
 class buy extends Task{//ショップ
 
 	function __construct(PluginBase $owner, $name){
-		parent::__construct($owner);
+		$this->owner = $owner;
 		$this->name = $name;
 	}
 
 	function onRun(int $currentTick){
-		if(isset($this->getOwner()->buy[$this->name])){
-			unset($this->getOwner()->buy[$this->name]);
+		if(isset($this->owner->buy[$this->name])){
+			unset($this->owner->buy[$this->name]);
 		}
 	}
 }
@@ -973,11 +972,11 @@ class buy extends Task{//ショップ
 class ArmorUnbreaking extends Task{//防具
 
 	function __construct(PluginBase $owner){
-		parent::__construct($owner);
+		$this->owner = $owner;
 	}
 
 	function onRun(int $currentTick){
-		foreach($this->getOwner()->getServer()->getOnlinePlayers() as $players){
+		foreach($this->owner->getServer()->getOnlinePlayers() as $players){
 			$a0 = $players->getArmorInventory()->getHelmet();
 			$a1 = $players->getArmorInventory()->getChestplate();
 			$a2 = $players->getArmorInventory()->getLeggings();
@@ -997,20 +996,20 @@ class ArmorUnbreaking extends Task{//防具
 class StatusBar extends Task{//ステータスバー
 
 	function __construct(PluginBase $owner, $player){
-		parent::__construct($owner);
+		$this->owner = $owner;
 		$this->player = $player;
 	}
 
 	function onRun(int $currentTick){
 		$player = $this->player;
 		$name = $player->getName();
-		$money = $this->getOwner()->getMoney($name);
-		$level = $this->getOwner()->getLevel($name);
-		$exp = $this->getOwner()->getExp($name);
-		$up = $this->getOwner()->getLevelUpExpectedExperience($level, $exp);
-		$kill = $this->getOwner()->config[$name]->get("kill");
-		$death = $this->getOwner()->config[$name]->get("death");
-		$job = $this->getOwner()->config[$name]->get("job");
+		$money = $this->owner->getMoney($name);
+		$level = $this->owner->getLevel($name);
+		$exp = $this->owner->getExp($name);
+		$up = $this->owner->getLevelUpExpectedExperience($level, $exp);
+		$kill = $this->owner->config[$name]->get("kill");
+		$death = $this->owner->config[$name]->get("death");
+		$job = $this->owner->config[$name]->get("job");
 		if($job === ""){
 			$job = "就いていません";
 		}
@@ -1018,26 +1017,26 @@ class StatusBar extends Task{//ステータスバー
 		$eol = '§r'."\n";
 		$color = '§6';
 		$space = $eol.'§l'.$color;
-		if($this->getOwner()->money->get("経済システム") === "true" and $this->getOwner()->level->get("レベルシステム") === "true"){
+		if($this->owner->money->get("経済システム") === "true" and $this->owner->level->get("レベルシステム") === "true"){
 			$player->sendTip(
 				$space.$hhh.'§e  == status =='.
 				$space.$hhh.'Level: Lv.'.$level.
 				$space.$hhh.'経験値: '.$exp.'E'.
 				$space.$hhh.'レベルアップまで: '.$up.'E'.
-				$space.$hhh.'所持金: '.$money.''.$this->getOwner()->money->get("お金の単位").
+				$space.$hhh.'所持金: '.$money.''.$this->owner->money->get("お金の単位").
 				$space.$hhh.'職業: '.$job.
 				$space.$hhh.'Kill数: '.$kill.'kill'.
 				$space.$hhh.'Death数: '.$death.'death'.
 				$eol.$eol.$eol.$eol.$eol.$eol.$eol.$eol.$eol.$eol.$eol.$eol
 			);
-		}elseif($this->getOwner()->money->get("経済システム") === "true" and $this->getOwner()->level->get("レベルシステム") !== "true"){
+		}elseif($this->owner->money->get("経済システム") === "true" and $this->owner->level->get("レベルシステム") !== "true"){
 			$player->sendTip(
 				$space.$hhh.'§e  == status =='.
-				$space.$hhh.'所持金: '.$money.''.$this->getOwner()->money->get("お金の単位").
+				$space.$hhh.'所持金: '.$money.''.$this->owner->money->get("お金の単位").
 				$space.$hhh.'職業: '.$job.
 				$eol.$eol.$eol.$eol.$eol.$eol.$eol.$eol.$eol.$eol.$eol.$eol
 			);
-		}elseif($this->getOwner()->money->get("経済システム") !== "true" and $this->getOwner()->level->get("レベルシステム") === "true"){
+		}elseif($this->owner->money->get("経済システム") !== "true" and $this->owner->level->get("レベルシステム") === "true"){
 			$player->sendTip(
 				$space.$hhh.'§e  == status =='.
 				$space.$hhh.'Level: Lv.'.$level.
