@@ -5,7 +5,7 @@ namespace system;
 use pocketmine\plugin\PluginBase;
 use pocketmine\event\Listener;
 use pocketmine\command\CommandExecutor;
-use pocketmine\scheduler\PluginTask;
+use pocketmine\scheduler\Task;
 //use pocketmine\scheduler\CallbackTask;
 use pocketmine\block\Air;
 use pocketmine\block\Block;
@@ -942,7 +942,7 @@ class main extends PluginBase implements Listener{
 	}
 }
 
-class AgainTap extends PluginTask{//ショップ
+class AgainTap extends Task{//ショップ
 
 	function __construct(PluginBase $owner, $name){
 		parent::__construct($owner);
@@ -956,7 +956,7 @@ class AgainTap extends PluginTask{//ショップ
 	}
 }
 
-class buy extends PluginTask{//ショップ
+class buy extends Task{//ショップ
 
 	function __construct(PluginBase $owner, $name){
 		parent::__construct($owner);
@@ -970,7 +970,7 @@ class buy extends PluginTask{//ショップ
 	}
 }
 
-class ArmorUnbreaking extends PluginTask{//防具
+class ArmorUnbreaking extends Task{//防具
 
 	function __construct(PluginBase $owner){
 		parent::__construct($owner);
@@ -994,7 +994,7 @@ class ArmorUnbreaking extends PluginTask{//防具
 	}
 }
 
-class StatusBar extends PluginTask{//ステータスバー
+class StatusBar extends Task{//ステータスバー
 
 	function __construct(PluginBase $owner, $player){
 		parent::__construct($owner);
