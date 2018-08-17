@@ -1,5 +1,41 @@
 name: SystemControl
 main: system\main
-version: 1.0
+version: 2.2
 api: [3.0.0-ALPHA10, 3.0.0-ALPHA11, 3.0.0-ALPHA12]
-author: 1.0
+author: hayao
+commands:
+  id:
+    description: "IDCHECK"
+
+  reset:
+    description: "InventoryReset"
+
+  xyz:
+    description: "座標確認"
+
+  relog:
+    description: "サーバーリログ"
+
+  money:
+    description: "所持金確認"
+
+  addmoney:
+    description: "所持金増加"
+    permission: op
+
+  removemoney:
+    description: "所持金減少"
+    permission: op
+
+  seemoney:
+    description: "他プレイヤーの所持金確認"
+    permission: op
+
+  pay:
+    description: "お金交換"
+
+  land:
+    description: "土地関連"
+
+  job:
+    description: "Job機能"
