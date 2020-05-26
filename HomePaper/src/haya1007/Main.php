@@ -12,6 +12,8 @@ use pocketmine\level\Position;
 use pocketmine\item\Item;
 use pocketmine\inventory\Inventory;
 
+use pocketmine\network\mcpe\protocol\ModalFormRequestPacket;
+
 class main extends PluginBase{
 
 	public function onEnable(){
@@ -55,5 +57,12 @@ class main extends PluginBase{
 			$player->teleport(new Position($x, $y, $z, $this->getServer()->getLevelByName($world)));
 			$player->sendMessage("§l§aワーーーーープ！！！");
 		}
+	}
+
+	public function createWindow(Player $player, $data, int $id){
+		$pk = new ModalFormRequestPacket();
+		$pk->formId = $id;
+		$pk->formData = json_encode($data, JSON_PRETTY_PRINT | JSON_BIGINT_AS_STRING | JSON_UNESCAPED_UNICODE);
+		$player->dataPacket($pk);
 	}
 }
